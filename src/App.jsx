@@ -10,8 +10,13 @@ function App() {
 const[title,setTitle] = useState("")
 const [description , setDescription] = useState("")
 const [storagedata , setStoragedata] = useState(JSON.parse(localStorage.getItem("savedtodosdata")))
+const[total,setTotal] = useState(JSON.parse(localStorage.getItem("savedtodosdata")).length)
+
 let getdata;
 let getindex;
+
+
+
 
 const Addtodofunction = (e)=>{
   e.preventDefault();
@@ -25,9 +30,11 @@ const Addtodofunction = (e)=>{
     localStorage.setItem("savedtodosdata", JSON.stringify(saveddata))
      getdata = JSON.parse(localStorage.getItem("savedtodosdata"))
      setStoragedata(getdata)
-    // console.log("insidefunction",getdata);
+    // console.log("insidefunction",getdata.length);
     setDescription("")
     setTitle("")
+    setTotal()
+    setTotal(JSON.parse(localStorage.getItem("savedtodosdata")).length)
   }
   else{
     alert("Enter Both title/description")
@@ -52,6 +59,8 @@ localStorage.setItem("savedtodosdata", JSON.stringify(saveddata))
  let getdata = JSON.parse(localStorage.getItem("savedtodosdata"))
  setStoragedata(getdata)
   console.log(getdata);
+
+  setTotal(JSON.parse(localStorage.getItem("savedtodosdata")).length)
 }
 
 
@@ -79,7 +88,7 @@ const decqty = (e)=>{
      let getdata = JSON.parse(localStorage.getItem("savedtodosdata"))
      setStoragedata(getdata)
       console.log(getdata);
-    
+      setTotal(JSON.parse(localStorage.getItem("savedtodosdata")).length)
   }
 
 }
@@ -93,7 +102,7 @@ a.splice(getindex,1)
 localStorage.setItem("savedtodosdata", JSON.stringify(a))
 getdata = JSON.parse(localStorage.getItem("savedtodosdata"))
 setStoragedata(getdata)
-
+setTotal(JSON.parse(localStorage.getItem("savedtodosdata")).length)
 }
 
 const editfunction = (e)=>{
@@ -112,6 +121,7 @@ if(title && description){
   localStorage.setItem("savedtodosdata", JSON.stringify(a))
   getdata = JSON.parse(localStorage.getItem("savedtodosdata"))
   setStoragedata(getdata)
+  setTotal(JSON.parse(localStorage.getItem("savedtodosdata")).length)
 }
 else{
   alert("Enter Both title/description")
@@ -191,11 +201,11 @@ storagedata && storagedata.map((data,ind)=>(
 <div className='descriptiondata flex items-center justify-between'>
   <h1 className=' font-bold w-1/3 text-center'>{data.title}</h1>
   <div className=' w-1/3 flex justify-around'>
-  <button className=' bg-slate-800 text-white p-1 rounded-lg ' onClick={addqty}>
+  <button className=' bg-slate-800 text-white p-1 mr-2 rounded-lg ' onClick={addqty}>
 Incr
   </button>
  
-  <p className=' flex flex-wrap para '>{data.description}</p>
+  <p className=' flex flex-wrap para mr-2'>{data.description}</p>
   <button className=' bg-slate-800 text-white p-1 rounded-lg ' onClick={decqty}>
 Decr
   </button>
@@ -209,6 +219,7 @@ onClick={editfunction} id={ind}/>
 </div>  
 ))
 }
+<h1 className=' text-right mt-3 bg-zinc-700 text-white p-3 text-2xl shadow-lg shadow-neutral-950 border-2 border-stone-950'>Total  {total} Items</h1>
     </div>
   )
 }
