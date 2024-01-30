@@ -188,8 +188,9 @@ onClick={Addtodofunction}
 {
 storagedata && storagedata.map((data,ind)=>(
 <div key={ind} id = {ind} className=' todoitemsbox shadow-md shadow-slate-500 rounded-md flex  m-auto justify-between items-center sm:w-11/12 lg:w-2/3 bg-zinc-300 mt-3'>
-<div className='descriptiondata flex items-center justify-around'>
-  <h1 className=' font-bold '>{data.title}</h1>
+<div className='descriptiondata flex items-center justify-between'>
+  <h1 className=' font-bold w-1/3 text-center'>{data.title}</h1>
+  <div className=' w-1/3 flex justify-around'>
   <button className=' bg-slate-800 text-white p-1 rounded-lg ' onClick={addqty}>
 Incr
   </button>
@@ -199,7 +200,9 @@ Incr
 Decr
   </button>
   </div>
-<div>
+  </div>
+
+<div className=' w-1/3 text-right'>
   <FontAwesomeIcon icon="pen-to-square" className=' m-2 text-green-600 text-2xl editfunc' 
 onClick={editfunction} id={ind}/> 
 <FontAwesomeIcon icon="trash"  className=' m-2 text-red-700 text-2xl deltfunc' onClick={deletefunction}/></div>
