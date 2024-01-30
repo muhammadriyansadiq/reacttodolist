@@ -9,7 +9,7 @@ library.add(faTrash , faPenToSquare,faPlus,faMinus);
 function App() {
 const[title,setTitle] = useState("")
 const [description , setDescription] = useState("")
-const [storagedata , setStoragedata] = useState(JSON.parse(localStorage.getItem("savedtodosdata")))
+const [storagedata , setStoragedata] = useState(JSON.parse(localStorage.getItem("savedtodosdata")) || 0)
 const[total,setTotal] = useState(JSON.parse(localStorage.getItem("savedtodosdata")).length)
 
 let getdata;
