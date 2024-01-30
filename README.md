@@ -1,2 +1,2 @@
 Deployed Link
-https://riyanshopreactweb.netlify.app/
+https://riyanshoppingwebonreact.netlify.app/
