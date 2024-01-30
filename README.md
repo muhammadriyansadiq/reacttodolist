@@ -1,2 +1,2 @@
 Deployed Link
-https://wwwriyanreacttodolistcom.netlify.app/
+https://riyanshopreactweb.netlify.app/
