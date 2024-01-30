@@ -132,11 +132,11 @@ console.log("outside",storagedata);
 
   return (
     <div>
-      <h1 className=' bg-purple-500 text-center p-3'>Shopping-List</h1>
+      <h1 className=' bg-zinc-700 text-center p-3 text-white'>Shopping-List</h1>
 
       
 
-      <form className="max-w-md mx-auto flex flex-col shadow-md shadow-slate-500 p-3 m-3">
+      <form className="max-w-md mx-auto flex flex-col shadow-md shadow-slate-500 p-3 m-3 bg-zinc-200">
     <div className="relative z-0 w-full mb-5 group">
       <input
         type="text"
@@ -176,7 +176,7 @@ console.log("outside",storagedata);
     </div>
     <button
 onClick={Addtodofunction}
-      className=" text-center text-white bg-purple-500   font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5"
+      className=" text-center text-white bg-zinc-800   font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5"
       style={{opacity: title && description ? 1: 0.2}}
       disabled = {!title && !description}
     >
@@ -187,7 +187,7 @@ onClick={Addtodofunction}
 
 {
 storagedata && storagedata.map((data,ind)=>(
-<div key={ind} id = {ind} className=' todoitemsbox shadow-md shadow-slate-500 rounded-md flex  m-auto justify-between items-center sm:w-11/12 lg:w-2/3'>
+<div key={ind} id = {ind} className=' todoitemsbox shadow-md shadow-slate-500 rounded-md flex  m-auto justify-between items-center sm:w-11/12 lg:w-2/3 bg-zinc-300 mt-3'>
 <div className='descriptiondata flex items-center justify-around'>
   <h1 className=' font-bold '>{data.title}</h1>
   <button className=' bg-slate-800 text-white p-1 rounded-lg ' onClick={addqty}>
