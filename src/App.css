@@ -7,9 +7,9 @@ body{
   width: 100vw;
 }
 .para{
-  width: 100%;
+  /* width: 100%; */
   /* word-wrap: break-word; */
-  overflow-wrap: anywhere;
+  /* overflow-wrap: anywhere; */
 }
 .descriptiondata{
   width: 65%;
@@ -22,3 +22,19 @@ body{
 .deltfunc{
   cursor: pointer;
 }
+
+.addqty{
+  cursor: pointer;
+  font-size: 28px;
+  /* background-color: rgb(50, 239, 101); */
+  border-radius: 50%;
+}
+.decqty{
+  cursor: pointer;
+  font-size: 28px;
+  /* background-color: rgb(50, 239, 101); */
+  border-radius: 50%;
+}
+/* .addqty:hover{
+  font-size: 30px;
+} */

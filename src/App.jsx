@@ -2,9 +2,9 @@ import { useState } from 'react'
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome" 
 import './App.css'
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faTrash , faPenToSquare  } from '@fortawesome/free-solid-svg-icons';
+import { faTrash , faPenToSquare ,faPlus,faMinus } from '@fortawesome/free-solid-svg-icons';
 
-library.add(faTrash , faPenToSquare );
+library.add(faTrash , faPenToSquare,faPlus,faMinus);
 
 function App() {
 const[title,setTitle] = useState("")
@@ -26,14 +26,64 @@ const Addtodofunction = (e)=>{
      getdata = JSON.parse(localStorage.getItem("savedtodosdata"))
      setStoragedata(getdata)
     // console.log("insidefunction",getdata);
+    setDescription("")
+    setTitle("")
   }
   else{
     alert("Enter Both title/description")
   }
-// console.log(title);
-// console.log(description);
 
 }
+
+const addqty = (e)=>{
+  // console.log(+e.target.parentNode.id);
+  let getindex = +e.target.parentNode.parentNode.id
+  console.log("id",getindex);
+  let  saveddata =   JSON.parse(localStorage.getItem("savedtodosdata")) || [];
+  let add = +saveddata[getindex].description+1
+  let title = saveddata[getindex].title
+  console.log( add);
+  let saveditems = {  
+    title:title,
+    description:add
+  };
+saveddata.splice(getindex,1,saveditems)
+localStorage.setItem("savedtodosdata", JSON.stringify(saveddata))
+ let getdata = JSON.parse(localStorage.getItem("savedtodosdata"))
+ setStoragedata(getdata)
+  console.log(getdata);
+}
+
+
+
+const decqty = (e)=>{
+  console.log(e.target.parentNode);
+  console.log(+e.target.parentNode.id);
+  let getindex = e.target.parentNode.parentNode.id
+  console.log("id",getindex);
+  let  saveddata =   JSON.parse(localStorage.getItem("savedtodosdata")) || [];
+  let add = +saveddata[getindex].description
+
+  console.log(add);
+
+  if(add>0){
+    add = add -1
+      let title = saveddata[getindex].title
+      console.log( add);
+      let saveditems = {  
+        title:title,
+        description:add
+      };
+    saveddata.splice(getindex,1,saveditems)
+    localStorage.setItem("savedtodosdata", JSON.stringify(saveddata))
+     let getdata = JSON.parse(localStorage.getItem("savedtodosdata"))
+     setStoragedata(getdata)
+      console.log(getdata);
+    
+  }
+
+}
+
 
 const deletefunction = (e)=>{
   getindex =e.target.parentNode.parentNode.parentNode.id 
@@ -49,8 +99,8 @@ setStoragedata(getdata)
 const editfunction = (e)=>{
   getindex =e.target.parentNode.id
   console.log(getindex);
-  let title = prompt("Enter Your Title")
-  let description =  prompt("enter your description")
+  let title = prompt("Enter Your Item")
+  let description =  prompt("Items quantity")
 
 if(title && description){
   let saveditems = {
@@ -82,7 +132,7 @@ console.log("outside",storagedata);
 
   return (
     <div>
-      <h1 className=' bg-purple-500 text-center p-3'>Todo-App</h1>
+      <h1 className=' bg-purple-500 text-center p-3'>Shopping-List</h1>
 
       
 
@@ -96,30 +146,32 @@ console.log("outside",storagedata);
         placeholder=" "
         required=""
         onChange={(e)=>setTitle(e.target.value)}
+        value={title}
 
       />
       <label
         htmlFor="floating_email"
         className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
       >
-        Title
+        Items
       </label>
     </div>
     <div className="relative z-0 w-full mb-5 group">
       <input
-        type="text"
+        type="number"
         name="floating_password"
         id="floating_password"
         className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
         placeholder=" "
         required=""
         onChange={(e)=>setDescription(e.target.value)}
+        value={description}
       />
       <label
         htmlFor="floating_password"
         className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
       >
-        Description
+        Item qty
       </label>
     </div>
     <button
@@ -135,10 +187,17 @@ onClick={Addtodofunction}
 
 {
 storagedata && storagedata.map((data,ind)=>(
-<div key={ind} className=' todoitemsbox shadow-md shadow-slate-500 rounded-md flex w-3/4 m-auto justify-between items-center ' id={ind}>
-<div className='descriptiondata text-center  flex flex-col flex-wrap'>
-  <h1 className=' font-bold py-2'>{data.title}</h1>
-  <p className=' flex flex-wrap para px-2'>{data.description}</p>
+<div key={ind} id = {ind} className=' todoitemsbox shadow-md shadow-slate-500 rounded-md flex  m-auto justify-between items-center sm:w-11/12 lg:w-2/3'>
+<div className='descriptiondata flex items-center justify-around'>
+  <h1 className=' font-bold '>{data.title}</h1>
+  <button className=' bg-slate-800 text-white p-1 rounded-lg ' onClick={addqty}>
+Incr
+  </button>
+ 
+  <p className=' flex flex-wrap para '>{data.description}</p>
+  <button className=' bg-slate-800 text-white p-1 rounded-lg ' onClick={decqty}>
+Decr
+  </button>
   </div>
 <div>
   <FontAwesomeIcon icon="pen-to-square" className=' m-2 text-green-600 text-2xl editfunc' 
@@ -147,8 +206,6 @@ onClick={editfunction} id={ind}/>
 </div>  
 ))
 }
-
-
     </div>
   )
 }
