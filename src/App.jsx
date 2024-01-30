@@ -9,12 +9,16 @@ library.add(faTrash , faPenToSquare,faPlus,faMinus);
 function App() {
 const[title,setTitle] = useState("")
 const [description , setDescription] = useState("")
-const [storagedata , setStoragedata] = useState(JSON.parse(localStorage.getItem("savedtodosdata")) || 0)
-const[total,setTotal] = useState(JSON.parse(localStorage.getItem("savedtodosdata")).length)
+const [storagedata , setStoragedata] = useState(JSON.parse(localStorage.getItem("savedtodosdata"))|| [])
+let check =  JSON.parse(localStorage.getItem("savedtodosdata"))
+let val = 0;
+if(check){
+val = JSON.parse(localStorage.getItem("savedtodosdata")).length
+}
+const[total,setTotal] = useState(val)
 
 let getdata;
 let getindex;
-
 
 
 
@@ -37,19 +41,19 @@ const Addtodofunction = (e)=>{
     setTotal(JSON.parse(localStorage.getItem("savedtodosdata")).length)
   }
   else{
-    alert("Enter Both title/description")
+    alert("Enter Both item/quantity")
   }
 
 }
 
 const addqty = (e)=>{
   // console.log(+e.target.parentNode.id);
-  let getindex = +e.target.parentNode.parentNode.id
+  let getindex = +e.target.parentNode.parentNode.parentNode.id
   console.log("id",getindex);
   let  saveddata =   JSON.parse(localStorage.getItem("savedtodosdata")) || [];
   let add = +saveddata[getindex].description+1
   let title = saveddata[getindex].title
-  console.log( add);
+  // console.log( add);
   let saveditems = {  
     title:title,
     description:add
@@ -58,7 +62,7 @@ saveddata.splice(getindex,1,saveditems)
 localStorage.setItem("savedtodosdata", JSON.stringify(saveddata))
  let getdata = JSON.parse(localStorage.getItem("savedtodosdata"))
  setStoragedata(getdata)
-  console.log(getdata);
+  // console.log(getdata);
 
   setTotal(JSON.parse(localStorage.getItem("savedtodosdata")).length)
 }
@@ -66,19 +70,19 @@ localStorage.setItem("savedtodosdata", JSON.stringify(saveddata))
 
 
 const decqty = (e)=>{
-  console.log(e.target.parentNode);
-  console.log(+e.target.parentNode.id);
-  let getindex = e.target.parentNode.parentNode.id
-  console.log("id",getindex);
+  // console.log(e.target.parentNode);
+  // console.log(+e.target.parentNode.id);
+  let getindex = e.target.parentNode.parentNode.parentNode.id
+  // console.log("id",getindex);
   let  saveddata =   JSON.parse(localStorage.getItem("savedtodosdata")) || [];
   let add = +saveddata[getindex].description
 
-  console.log(add);
+  // console.log(add);
 
   if(add>0){
     add = add -1
       let title = saveddata[getindex].title
-      console.log( add);
+      // console.log( add);
       let saveditems = {  
         title:title,
         description:add
@@ -87,9 +91,10 @@ const decqty = (e)=>{
     localStorage.setItem("savedtodosdata", JSON.stringify(saveddata))
      let getdata = JSON.parse(localStorage.getItem("savedtodosdata"))
      setStoragedata(getdata)
-      console.log(getdata);
+      // console.log(getdata);
       setTotal(JSON.parse(localStorage.getItem("savedtodosdata")).length)
   }
+
 
 }
 
@@ -107,7 +112,7 @@ setTotal(JSON.parse(localStorage.getItem("savedtodosdata")).length)
 
 const editfunction = (e)=>{
   getindex =e.target.parentNode.id
-  console.log(getindex);
+  // console.log(getindex);
   let title = prompt("Enter Your Item")
   let description =  prompt("Items quantity")
 
@@ -124,7 +129,7 @@ if(title && description){
   setTotal(JSON.parse(localStorage.getItem("savedtodosdata")).length)
 }
 else{
-  alert("Enter Both title/description")
+  alert("Enter Both Item/quantity")
 }
   // let  saveddata =   JSON.parse(localStorage.getItem("savedtodosdata")) || [];
 
@@ -137,7 +142,7 @@ else{
 }
 
 getdata = JSON.parse(localStorage.getItem("savedtodosdata"))
-console.log("outside",storagedata);
+// console.log("outside",storagedata);
 
 
   return (
@@ -193,8 +198,6 @@ onClick={Addtodofunction}
       Add Todo
     </button>
   </form>
-
-
 {
 storagedata && storagedata.map((data,ind)=>(
 <div key={ind} id = {ind} className=' todoitemsbox shadow-md shadow-slate-500 rounded-md flex  m-auto justify-between items-center sm:w-11/12 lg:w-2/3 bg-zinc-300 mt-3'>
@@ -219,7 +222,7 @@ onClick={editfunction} id={ind}/>
 </div>  
 ))
 }
-<h1 className=' text-right mt-3 bg-zinc-700 text-white p-3 text-2xl shadow-lg shadow-neutral-950 border-2 border-stone-950'>Total  {total} Items</h1>
+<h1 className=' text-right mt-3 bg-zinc-700 text-white p-3 text-2xl shadow-lg shadow-neutral-950 border-2 border-stone-950' style={total? {display:"block"}:{display:"none"}}>Total  {total} Items</h1>
     </div>
   )
 }
